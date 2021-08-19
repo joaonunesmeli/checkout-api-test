@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+header > * {
+    align-self: center;
+    padding: 8px;
+}
+
+section {
+    flex-basis: 0.33;
+}
+
+.buy-button {
+    font-size: 28px;
+}
+
+.content {
+    min-height: 80vh;
+    display: flex;
+}
+
+.product {
+    margin: 8px;
+}

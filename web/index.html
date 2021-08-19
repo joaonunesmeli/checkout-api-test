@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/index.css">
+        <title>Feira Livre</title>
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
+        <script src="js/card-checkout.js"></script>
+    </head>
+    <body>
+        <header>
+            <img src="img/icon.png" style="width: 60px; height: auto" />
+            <h1>Feira Livre</h1>
+        </header>
+        <div class="content">
+            <section class="product">
+                <div>
+                    <img src="img/banana.jpeg" style="width: 400px" />
+                </div>
+                <div>
+                    <h2>Banana radiotiva - R$ 100,00</h2>
+                    A mesma banana de sempre, mas com um toque especial.
+                </div>
+                <button class="buy-button">
+                    COMPRAR
+                </button>
+            </section>
+            <section>
+                <form id="card-checkout" >
+                   <input type="text" name="cardNumber" id="card-checkout-cardNumber" />
+                   <input type="text" name="cardExpirationMonth" id="card-checkout-cardExpirationMonth" />
+                   <input type="text" name="cardExpirationYear" id="card-checkout-cardExpirationYear" />
+                   <input type="text" name="cardholderName" id="card-checkout-cardholderName"/>
+                   <input type="email" name="cardholderEmail" id="card-checkout-cardholderEmail"/>
+                   <input type="text" name="securityCode" id="card-checkout-securityCode" />
+                   <select name="issuer" id="card-checkout-issuer"></select>
+                   <select name="identificationType" id="card-checkout-identificationType"></select>
+                   <input type="text" name="identificationNumber" id="card-checkout-identificationNumber"/>
+                   <select name="installments" id="card-checkout-installments"></select>
+                   <button type="submit" id="card-checkout-submit">Pagar</button>
+                   <progress value="0" class="progress-bar">Carregando...</progress>
+                </form>
+            </section>
+        </div>
+        <footer>
+            Feira Livre™, 1291, Todos direitos preservados
+        </footer>
+    </body>
+</html>
