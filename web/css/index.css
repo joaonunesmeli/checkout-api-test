@@ -2,6 +2,15 @@
     box-sizing: border-box;
 }
 
+body {
+    padding: 16px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 header {
     display: flex;
     flex-wrap: wrap;
@@ -13,8 +22,18 @@ header > * {
     padding: 8px;
 }
 
+input, select {
+    padding: 8px 0px;
+    margin: 8px 0px;
+}
+
 section {
-    flex-basis: 0.33;
+    flex-grow: 1;
+}
+
+footer {
+    padding: 32px;
+    text-align: center;
 }
 
 .buy-button {
@@ -22,7 +41,8 @@ section {
 }
 
 .content {
-    min-height: 80vh;
+    /* min-height: 80vh; */
+    margin: 32px 0px;
     display: flex;
 }
 

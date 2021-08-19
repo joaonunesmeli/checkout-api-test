@@ -4,7 +4,7 @@ const cardForm = mp.cardForm({
   amount: "100.00",
   autoMount: true,
   form: {
-    id: "form-checkout",
+    id: "card-checkout",
     cardholderName: {
       id: "card-checkout-cardholderName",
       placeholder: "Titular do cartão",
@@ -65,7 +65,7 @@ const cardForm = mp.cardForm({
         identificationType,
       } = cardForm.getCardFormData();
 
-      fetch("/process_payment", {
+      fetch("/process_card_payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

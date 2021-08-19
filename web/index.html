@@ -3,8 +3,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/index.css">
         <title>Feira Livre</title>
-        <script src="https://sdk.mercadopago.com/js/v2"></script>
-        <script src="js/card-checkout.js"></script>
     </head>
     <body>
         <header>
@@ -13,19 +11,28 @@
         </header>
         <div class="content">
             <section class="product">
+                <h2>Banana radiotiva</h2>
                 <div>
                     <img src="img/banana.jpeg" style="width: 400px" />
                 </div>
                 <div>
-                    <h2>Banana radiotiva - R$ 100,00</h2>
+                    <h4>R$ 100,00</h4>
                     A mesma banana de sempre, mas com um toque especial.
                 </div>
-                <button class="buy-button">
-                    COMPRAR
-                </button>
             </section>
             <section>
-                <form id="card-checkout" >
+                <h2>Forma de pagamento</h2>
+                <button onclick="setPaymentType('card')">Cartão</button>
+                <button onclick="setPaymentType('ticket')">Boleto</button>
+                <button onclick="setPaymentType('pix')">PIX</button>
+            </section>
+            <section id="ticket-checkout-section">
+            </section>
+            <section id="pix-checkout-section">
+            </section>
+            <section id="card-checkout-section">
+                <h2>Dados do cartão</h2>
+                <form id="card-checkout">
                    <input type="text" name="cardNumber" id="card-checkout-cardNumber" />
                    <input type="text" name="cardExpirationMonth" id="card-checkout-cardExpirationMonth" />
                    <input type="text" name="cardExpirationYear" id="card-checkout-cardExpirationYear" />
@@ -37,7 +44,8 @@
                    <input type="text" name="identificationNumber" id="card-checkout-identificationNumber"/>
                    <select name="installments" id="card-checkout-installments"></select>
                    <button type="submit" id="card-checkout-submit">Pagar</button>
-                   <progress value="0" class="progress-bar">Carregando...</progress>
+                   <progress value="0" class="progress-bar" style="width: 100%">Carregando...</progress>
+                   <input name="MPHiddenInputPaymentMethod" id="MPHiddenInputPaymentMethod" type="hidden" />
                 </form>
             </section>
         </div>
@@ -45,4 +53,7 @@
             Feira Livre™, 1291, Todos direitos preservados
         </footer>
     </body>
+    <script src="js/index.js"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="js/card-checkout.js"></script>
 </html>
