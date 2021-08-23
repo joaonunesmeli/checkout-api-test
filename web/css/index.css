@@ -25,6 +25,8 @@ header > * {
 input, select {
     padding: 8px 0px;
     margin: 8px 0px;
+    display: block;
+    width: 100%;
 }
 
 section {

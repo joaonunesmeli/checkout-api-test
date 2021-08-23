@@ -1,10 +1,10 @@
 const express = require("express");
 const mercadopago = require("mercadopago");
 
-mercadopago.configurations.setAccessToken("TEST-4462057603423196-081818-538db50811c9494fa1393f688b03b36d-809883123");
+mercadopago.configurations.setAccessToken("TEST-3956725732885226-082317-be090641f90300d8755287af4b98c871-812341708");
 
-function processPayment(req, res) {
-    console.log("process payment ->", req.body);
+function processCardPayment(req, res) {
+    console.log("process card payment ->", req.body);
 
     const data = {
         transaction_amount: Number(req.body.transaction_amount),
@@ -24,17 +24,59 @@ function processPayment(req, res) {
 
     mercadopago.payment.save(data)
         .then(function(response) {
-            console.log("process payment | mercado pago response ->", response.body)
+            console.log("process card payment | mercado pago response ->", response.body)
             res.status(response.status).json({
                 status: response.body.status,
                 status_detail: response.body.status_detail,
                 id: response.body.id
             });
         }).catch(function(error) {
-            console.log("process payment error:", error)
+            console.log("process card payment error:", error)
             res.status(res.status).send(error);
         });
 }
+
+function processBoletoPayment(req, res) {
+    console.log("process boleto payment ->", req.body);
+
+    const b = req.body;
+    const data = {
+        transaction_amount: 100,
+        description: "Banana Radioativa",
+        payment_method_id: "bolbradesco",
+        payer: {
+            email: b.payerEmail,
+            first_name: b.payerFirstName,
+            last_name: b.payerLastName,
+            identification: {
+                type: 'CPF',
+                number: b.payerCpf,
+            },
+            address:  {
+                zip_code: "76843970",
+                street_name: "MySQL Street",
+                street_number: "3306",
+                neighborhood: "RDBMS",
+                city: "Databaseville",
+                federal_unit: "RO",
+            }
+        }
+    };
+
+    mercadopago.payment.create(data)
+        .then(function(response) {
+            console.log("process boleto payment | mercado pago response ->", response.body)
+            res.status(response.status).json({
+                status: response.body.status,
+                status_detail: response.body.status_detail,
+                id: response.body.id
+            });
+        }).catch(function(error) {
+            console.log("process boleto payment error:", error)
+            res.status(res.status).send(error);
+        });
+}
+
 
 function renderIndex(req, res) {
     res.status(200).sendFile("index.html");
@@ -47,7 +89,8 @@ app.use(express.json());
 app.use(express.static("../web"));
 
 app.get("/", renderIndex);
-app.post("/process_card_payment", processPayment);
+app.post("/process_card_payment", processCardPayment);
+app.post("/process_boleto_payment", processBoletoPayment);
 
 app.listen(8081, () => {
   console.log("The server is now running on Port 8081");
