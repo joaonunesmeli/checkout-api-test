@@ -43,7 +43,7 @@ function processBoletoPayment(req, res) {
     const data = {
         transaction_amount: 100,
         description: "Banana Radioativa",
-        payment_method_id: "bolbradesco",
+        payment_method_id: b.docType,
         payer: {
             email: b.payerEmail,
             first_name: b.payerFirstName,
@@ -90,7 +90,7 @@ app.use(express.static("../web"));
 
 app.get("/", renderIndex);
 app.post("/process_card_payment", processCardPayment);
-app.post("/process_boleto_payment", processBoletoPayment);
+app.post("/process_boleto_pix_payment", processBoletoPayment);
 
 app.listen(8081, () => {
   console.log("The server is now running on Port 8081");

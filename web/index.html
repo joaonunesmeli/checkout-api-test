@@ -27,14 +27,14 @@
                 <button onclick="setPaymentType('pix')">PIX</button>
             </section>
             <section id="ticket-checkout-section">
-                <h2>Boleto</h2>
-                <form id="boleto-checkout" action="/process_boleto_payment" method="post">
+                <h2 id="ticket-title">Boleto</h2>
+                <form id="boleto-pix-checkout" action="/process_boleto_pix_payment" method="post">
                     <input id="payerFirstName" name="payerFirstName" type="text" placeholder="Nome" />
                     <input id="payerLastName" name="payerLastName" type="text" placeholder="Sobrenome" />
                     <input id="payerEmail" name="payerEmail" type="text" placeholder="E-mail" />
                     <input id="payerCpf" name="payerCpf" type="text" placeholder="CPF" />
 
-                    <input disabled id="docType" name="docType" data-checkout="docType" type="hidden" placeholder="Boleto" value="bolbradesco" />
+                    <input id="docType" name="docType" data-checkout="docType" placeholder="Boleto" value="bolbradesco" />
                     <!-- <input id="docNumber" name="docNumber" data-checkout="docNumber" type="text" placeholder="Número do documento" /> -->
                     <input disabled type="hidden" name="transactionAmount" id="transactionAmount" value="100" />
                     <input type="hidden" name="productDescription" id="productDescription" value="Nome do Produto" />

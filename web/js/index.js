@@ -7,8 +7,24 @@ const paymentTypes = [
 const paymentSectionDisplays = {};
 
 function getPaymentTypeSectionElement(t) {
-    const id = `${t}-checkout-section`;
-    return document.getElementById(id);
+    if (t === "card") {
+        return document.getElementById(`${t}-checkout-section`);
+    }
+    return document.getElementById("ticket-checkout-section");
+}
+
+function setTicketDocType(t) {
+    const e = document.getElementById("docType");
+    const titleElem = document.getElementById("ticket-title");
+    if (t === "pix") {
+        titleElem.innerText = "Pix";
+        e.placeholder = "Pix";
+        e.value = "pix";
+    } else {
+        titleElem.innerText = "Boleto";
+        e.placeholder = "Boleto";
+        e.value = "bolbradesco";
+    }
 }
 
 function hide(element) {
@@ -20,6 +36,8 @@ function show(type, element) {
 }
 
 function setPaymentType(paymentType) {
+    setTicketDocType(paymentType);
+
     for (let i = 0; i < paymentTypes.length; i++) {
         const t = paymentTypes[i];
         const e = getPaymentTypeSectionElement(t);
@@ -34,7 +52,7 @@ function initPaymentTypeSections() {
     for (let i = 0; i < paymentTypes.length; i++) {
         const t = paymentTypes[i];
         const e = getPaymentTypeSectionElement(t);
-        paymentSectionDisplays[t] = e.style.display || "block";
+        paymentSectionDisplays[t] = "block";
         hide(e);
     }
 }
