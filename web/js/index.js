@@ -129,7 +129,7 @@ function init() {
                     paymentMethodId: payment_method_id,
                 } = cardForm.getCardFormData();
 
-                fetch("/process_card_payment", {
+                fetch("/api/process_card_payment", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
