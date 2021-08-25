@@ -6,6 +6,11 @@ body {
     padding: 16px;
 }
 
+button {
+    font-size: 20px;
+    width: 100%;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -36,10 +41,6 @@ section {
 footer {
     padding: 32px;
     text-align: center;
-}
-
-.buy-button {
-    font-size: 28px;
 }
 
 .content {

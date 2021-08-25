@@ -20,45 +20,41 @@
                     A mesma banana de sempre, mas com um toque especial.
                 </div>
             </section>
-            <section>
-                <h2>Forma de pagamento</h2>
-                <button onclick="setPaymentType('card')">Cartão</button>
-                <button onclick="setPaymentType('ticket')">Boleto</button>
-                <button onclick="setPaymentType('pix')">PIX</button>
-            </section>
-            <section id="ticket-checkout-section">
-                <h2 id="ticket-title">Boleto</h2>
-                <form id="boleto-pix-checkout" action="/process_boleto_pix_payment" method="post">
-                    <input id="payerFirstName" name="payerFirstName" type="text" placeholder="Nome" />
-                    <input id="payerLastName" name="payerLastName" type="text" placeholder="Sobrenome" />
-                    <input id="payerEmail" name="payerEmail" type="text" placeholder="E-mail" />
-                    <input id="payerCpf" name="payerCpf" type="text" placeholder="CPF" />
+            <section id="checkout-section">
+                <h2>Pagamento</h2>
+                <select id="payment-method" name="paymentMethod">
+                    <option value="bolbradesco">Boleto</option>
+                    <option value="pix">Pix</option>
+                    <option value="cardToken">Cartão de crédito</option>
+                </select>
 
-                    <input id="docType" name="docType" data-checkout="docType" placeholder="Boleto" value="bolbradesco" />
-                    <!-- <input id="docNumber" name="docNumber" data-checkout="docNumber" type="text" placeholder="Número do documento" /> -->
-                    <input disabled type="hidden" name="transactionAmount" id="transactionAmount" value="100" />
-                    <input type="hidden" name="productDescription" id="productDescription" value="Nome do Produto" />
-                    <button type="submit">Pagar</button>
+                <form id="checkout-form" action="/process_payment" method="post">
+                    <input id="first-name" name="firstName" type="text" placeholder="Nome" />
+                    <input id="last-name" name="lastName" type="text" placeholder="Sobrenome" />
+                    <input id="email" name="email" type="text" placeholder="E-mail" />
+                    <input id="payer-cpf" name="cpf" type="text" placeholder="CPF" />
+
+                    <input id="checkout-value" name="checkoutValue" type="hidden" value="100.00" />
+                    <input id="checkout-payment-method" name="paymentMethod" type="hidden" value="bolbradesco" />
+
+                    <button id="checkout-form-submit-button" type="submit">Pagar</button>
                 </form>
-            </section>
-            <section id="pix-checkout-section">
-            </section>
-            <section id="card-checkout-section">
-                <h2>Dados do cartão</h2>
-                <form id="card-checkout">
-                   <input type="text" name="cardNumber" id="card-checkout-cardNumber" />
-                   <input type="text" name="cardExpirationMonth" id="card-checkout-cardExpirationMonth" />
-                   <input type="text" name="cardExpirationYear" id="card-checkout-cardExpirationYear" />
-                   <input type="text" name="cardholderName" id="card-checkout-cardholderName"/>
-                   <input type="email" name="cardholderEmail" id="card-checkout-cardholderEmail"/>
-                   <input type="text" name="securityCode" id="card-checkout-securityCode" />
-                   <select name="issuer" id="card-checkout-issuer"></select>
-                   <select name="identificationType" id="card-checkout-identificationType"></select>
-                   <input type="text" name="identificationNumber" id="card-checkout-identificationNumber"/>
-                   <select name="installments" id="card-checkout-installments"></select>
-                   <button type="submit" id="card-checkout-submit">Pagar</button>
-                   <progress value="0" class="progress-bar" style="width: 100%">Carregando...</progress>
-                   <!-- <input name="MPHiddenInputPaymentMethod" id="MPHiddenInputPaymentMethod" type="hidden" /> -->
+
+                <form id="card-checkout-form" action="/process_payment" method="post">
+                    <input type="text" name="cardNumber" id="card-number" />
+                    <input type="text" name="cardExpirationMonth" id="card-expiration-month" />
+                    <input type="text" name="cardExpirationYear" id="card-expiration-year" />
+                    <input type="text" name="cardholderName" id="card-holder-name"/>
+                    <input type="email" name="cardholderEmail" id="card-holder-email"/>
+                    <input type="text" name="securityCode" id="card-security-code" />
+                    <select name="issuer" id="card-issuer"></select>
+                    <select name="identificationType" id="card-identification-type"></select>
+                    <input type="text" name="identificationNumber" id="card-identification-number"/>
+                    <select name="installments" id="card-installments"></select>
+                    <!-- <button type="submit" id="card-checkout-submit">Pagar</button> -->
+                    <progress value="0" class="progress-bar" style="width: 100%">Carregando...</progress>
+
+                    <button id="card-checkout-form-submit-button" type="submit">Pagar</button>
                 </form>
             </section>
         </div>
@@ -66,7 +62,6 @@
             Feira Livre™, 1291, Todos direitos preservados
         </footer>
     </body>
-    <script src="js/index.js"></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <script src="js/card-checkout.js"></script>
+    <script src="js/index.js"></script>
 </html>

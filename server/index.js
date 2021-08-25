@@ -25,32 +25,28 @@ function processCardPayment(req, res) {
     mercadopago.payment.save(data)
         .then(function(response) {
             console.log("process card payment | mercado pago response ->", response.body)
-            res.status(response.status).json({
-                status: response.body.status,
-                status_detail: response.body.status_detail,
-                id: response.body.id
-            });
+            res.status(response.status).json(response);
         }).catch(function(error) {
             console.log("process card payment error:", error)
             res.status(res.status).send(error);
         });
 }
 
-function processBoletoPayment(req, res) {
+function processPayment(req, res) {
     console.log("process boleto payment ->", req.body);
 
     const b = req.body;
     const data = {
-        transaction_amount: 100,
         description: "Banana Radioativa",
-        payment_method_id: b.docType,
+        payment_method_id: req.body.paymentMethod,
+        transaction_amount: Number(req.body.checkoutValue),
         payer: {
-            email: b.payerEmail,
-            first_name: b.payerFirstName,
-            last_name: b.payerLastName,
+            email: b.email,
+            first_name: b.firstName,
+            last_name: b.lastName,
             identification: {
                 type: 'CPF',
-                number: b.payerCpf,
+                number: b.cpf,
             },
             address:  {
                 zip_code: "76843970",
@@ -66,17 +62,12 @@ function processBoletoPayment(req, res) {
     mercadopago.payment.create(data)
         .then(function(response) {
             console.log("process boleto payment | mercado pago response ->", response.body)
-            res.status(response.status).json({
-                status: response.body.status,
-                status_detail: response.body.status_detail,
-                id: response.body.id
-            });
+            res.status(response.status).json(response);
         }).catch(function(error) {
             console.log("process boleto payment error:", error)
             res.status(res.status).send(error);
         });
 }
-
 
 function renderIndex(req, res) {
     res.status(200).sendFile("index.html");
@@ -89,8 +80,8 @@ app.use(express.json());
 app.use(express.static("../web"));
 
 app.get("/", renderIndex);
+app.post("/process_payment", processPayment);
 app.post("/process_card_payment", processCardPayment);
-app.post("/process_boleto_pix_payment", processBoletoPayment);
 
 app.listen(8081, () => {
   console.log("The server is now running on Port 8081");
