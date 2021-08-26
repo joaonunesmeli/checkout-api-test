@@ -1,6 +1,23 @@
+function extract({ response }) {
+    return {
+        id: response.id,
+        createdAt: response.date_created,
+        expirationDate: response.date_of_expiration,
+        issuer: response.issuer_id,
+        paymentMethodId: response.payment_method_id,
+        paymentTypeId: response.payment_type_id,
+        status: response.status,
+        payer: response.payer,
+        value: response.transaction_amount,
+        barCode: response.barcode ? response.barcode : null,
+        installments: response.installments,
+        idempotency: response.idempotency,
+        card: response.card ? response.card : null,
+    };
+}
+
 function handleCardPayment(req, res, deps) {
-    const { mercadopago } = deps;
-    console.log("process card payment ->", req.body);
+    const { mercadopago, fakedb } = deps;
 
     const data = {
         transaction_amount: Number(req.body.transaction_amount),
@@ -20,17 +37,22 @@ function handleCardPayment(req, res, deps) {
 
     mercadopago.payment.save(data)
         .then(function(response) {
-            console.log("process card payment | mercado pago response ->", response.body)
-            res.status(response.status).json(response);
+            const obj = extract(response);
+            const { id } = obj;
+            fakedb.set(`PAYMENT#${id}`, obj)
+            res.status(201).json(obj);
         }).catch(function(error) {
-            console.log("process card payment error:", error)
-            res.status(res.status).send(error);
+            console.log("");
+            console.log("");
+            console.log("error ::", error);
+            console.log("");
+            console.log("");
+            res.status(response.status).send(error);
         });
 }
 
 function handlePayment(req, res, deps) {
-    const { mercadopago } = deps;
-    console.log("process boleto payment ->", req.body);
+    const { mercadopago, fakedb } = deps;
 
     const b = req.body;
     const data = {
@@ -58,11 +80,17 @@ function handlePayment(req, res, deps) {
 
     mercadopago.payment.create(data)
         .then(function(response) {
-            console.log("process boleto payment | mercado pago response ->", response.body)
-            res.status(response.status).json(response);
+            const obj = extract(response);
+            const { id } = obj;
+            fakedb.set(`PAYMENT#${id}`, obj)
+            res.status(201).json(obj);
         }).catch(function(error) {
-            console.log("process boleto payment error:", error)
-            res.status(res.status).send(error);
+            console.log("");
+            console.log("");
+            console.log("error ::", error);
+            console.log("");
+            console.log("");
+            res.status(response.status).send(error);
         });
 }
 

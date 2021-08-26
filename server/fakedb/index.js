@@ -6,7 +6,7 @@ const db = JSON.parse(text);
 function set(key, value) {
     db[key] = value;
 
-    const txt = JSON.stringify(db, null, 2);
+    const txt = JSON.stringify(db, null, 4);
     fs.writeFileSync("db.json", txt);
 }
 

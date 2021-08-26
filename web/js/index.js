@@ -1,4 +1,4 @@
-const mp = new MercadoPago("TEST-651cca06-63aa-458d-86c0-94eb2a0a3f7c");
+const mp = new MercadoPago("TEST-f04f13ef-cbb3-4ce0-b68f-f1746036de84");
 
 /**
  *

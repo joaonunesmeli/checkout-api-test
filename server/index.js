@@ -6,11 +6,12 @@ const { handleIndexRendering } = require("./handlers/view");
 const { handlePayment, handleCardPayment } = require("./handlers/payment");
 const {
     handleClientRegistration,
-    handleCardRegistration
+    handleCardRegistration,
     getClient,
 } = require("./handlers/client");
 
-mercadopago.configurations.setAccessToken("TEST-3956725732885226-082317-be090641f90300d8755287af4b98c871-812341708");
+// mercadopago.configurations.setAccessToken("TEST-3092091470946551-082616-9171989b45799648cd23e379593fba9f-812341708");
+mercadopago.configurations.setAccessToken("TEST-8353792849888639-081214-185681dfd8682a20d8fcedc077519706-19133755");
 
 function adapt(handler) {
     const deps = { mercadopago, fakedb };
@@ -22,6 +23,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("../web"));
+app.set('json spaces', 4);
 
 app.get("/", handleIndexRendering);
 
