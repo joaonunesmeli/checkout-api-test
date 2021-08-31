@@ -10,8 +10,7 @@ const {
     getClient,
 } = require("./handlers/client");
 
-// mercadopago.configurations.setAccessToken("TEST-3092091470946551-082616-9171989b45799648cd23e379593fba9f-812341708");
-mercadopago.configurations.setAccessToken("TEST-8353792849888639-081214-185681dfd8682a20d8fcedc077519706-19133755");
+mercadopago.configurations.setAccessToken("TEST-3092091470946551-082616-9171989b45799648cd23e379593fba9f-812341708");
 
 function adapt(handler) {
     const deps = { mercadopago, fakedb };

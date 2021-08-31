@@ -5,7 +5,7 @@ function catchError(res) {
         console.log("error ::", error);
         console.log("");
         console.log("");
-        res.status(response.status).send(error);
+        res.status(error.status).send(error);
     }
 }
 
@@ -24,12 +24,12 @@ function handleClientRegistration(req, res, deps) {
                 id: id,
             };
             fakedb.set(k, v);
-            res.status(response.status).json({ id })
+            res.status(r.status).json({ id })
         }).catch(catchError(res));
 }
 
 function handleCardRegistration(req, res, deps) {
-    const { mercadopago } = deps;
+    const { mercadopago, fakedb } = deps;
     const {
         payment_method_id,
         customer_id,
@@ -38,15 +38,38 @@ function handleCardRegistration(req, res, deps) {
     } = req.body;
 
     mercadopago
-        .cards
+        .card
         .create({
-            customer: customer_id,
+            issuer_id: Number(issuer_id),
             payment_method_id,
-            issuer_id,
+            customer_id,
             token,
-        }).then(response => {
-            console.log(">>", response);
-            res.status(response.status).json({ id: response.id })
+        }).then(r => {
+            const {
+                id,
+                expiration_month,
+                first_six_digits,
+                last_four_digits,
+                expiration_year,
+                security_code,
+                customer_id,
+                issuer,
+            } = r.response;
+
+            const k = `CARD#${id}`;
+            const v = {
+                expirationMonth: expiration_month,
+                firstSixDigits: first_six_digits,
+                lastFourDigits: last_four_digits,
+                expirationYear: expiration_year,
+                securityCode: security_code,
+                customerId: customer_id,
+                issuer,
+                id,
+            };
+
+            fakedb.set(k, v);
+            res.status(r.status).json({ id })
         }).catch(catchError(res));
 }
 

@@ -37,7 +37,13 @@ function handleCardPayment(req, res, deps) {
 
     mercadopago.payment.save(data)
         .then(function(response) {
-            const obj = extract(response);
+            const obj = {
+                ...extract(response),
+                cardToken: data.token,
+                issuerID: data.issuer_id,
+                paymentTypeID: data.payment_type_id,
+                paymentMethodID: data.payment_method_id,
+            };
             const { id } = obj;
             fakedb.set(`PAYMENT#${id}`, obj)
             res.status(201).json(obj);
@@ -47,7 +53,7 @@ function handleCardPayment(req, res, deps) {
             console.log("error ::", error);
             console.log("");
             console.log("");
-            res.status(response.status).send(error);
+            res.status(400).send(error);
         });
 }
 
@@ -90,7 +96,7 @@ function handlePayment(req, res, deps) {
             console.log("error ::", error);
             console.log("");
             console.log("");
-            res.status(response.status).send(error);
+            res.status(400).send(error);
         });
 }
 
